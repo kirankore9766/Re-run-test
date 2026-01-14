@@ -11,13 +11,11 @@ app.use(express.json());
 
 // --------------------------------------------------
 // ❌ HIGH BUG: Null reference (app crash)
-let users = null;
+let users = []; 
 
 app.get("/users", (req, res) => {
-  // TypeError: Cannot read property 'length' of null
   res.send("Total users: " + users.length);
 });
-
 // --------------------------------------------------
 // ❌ HIGH BUG: Unhandled async error (server crash)
 app.get("/read", (req, res) => {
