@@ -1,2 +1,2 @@
-let a=20;
-console.log(b)
+let a = 20;
+console.log(a);
