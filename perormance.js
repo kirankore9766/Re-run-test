@@ -60,14 +60,16 @@ app.get("/logs", (req, res) => {
 });
 
 // --------------------------------------------------
-// ❌ MEDIUM: Memory Leak (Global Array)
 let cache = [];
+const MAX_CACHE_ENTRIES = 50;
 
-app.get("/cache", (req, res) => {
-  cache.push(new Array(100000).fill("leak")); // never cleared
-  res.send("Cache size: " + cache.length);
+app.get('/cache', (req, res) => {
+  cache.push(new Array(100000).fill('leak'));
+  while (cache.length > MAX_CACHE_ENTRIES) {
+    cache.shift(); // evict oldest
+  }
+  res.send('Cache size: ' + cache.length);
 });
-
 // --------------------------------------------------
 // ❌ MEDIUM: Recalculating Same Data Repeatedly
 app.get("/stats", (req, res) => {
